@@ -1,8 +1,52 @@
 {
   "version": "0.2.0",
   "configurations": [
-    {"name": "Check GPU", "type": "debugpy", "request": "launch", "module": "sausage_vision", "args": ["doctor", "--require-gpu"], "console": "integratedTerminal"},
-    {"name": "Train YOLO11 pilot", "type": "debugpy", "request": "launch", "module": "sausage_vision", "args": ["train", "--model", "yolo11n-seg.pt", "--out", "runs/yolo11n_pilot", "--batch", "4"], "console": "integratedTerminal"},
-    {"name": "Train YOLOv8 pilot", "type": "debugpy", "request": "launch", "module": "sausage_vision", "args": ["train", "--model", "yolov8n-seg.pt", "--out", "runs/yolov8n_pilot", "--batch", "4"], "console": "integratedTerminal"}
+    {
+      "name": "Check GPU",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "sausage_vision",
+      "args": [
+        "doctor",
+        "--require-gpu"
+      ],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Train YOLO11 pilot",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "sausage_vision",
+      "args": [
+        "train",
+        "--model",
+        "yolo11n-seg.pt",
+        "--out",
+        "runs/yolo11n_pilot",
+        "--batch",
+        "4",
+        "--config",
+        "configs/train_pilot_small.yaml"
+      ],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Train YOLOv8 pilot",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "sausage_vision",
+      "args": [
+        "train",
+        "--model",
+        "yolov8n-seg.pt",
+        "--out",
+        "runs/yolov8n_pilot",
+        "--batch",
+        "4",
+        "--config",
+        "configs/train_pilot_small.yaml"
+      ],
+      "console": "integratedTerminal"
+    }
   ]
 }

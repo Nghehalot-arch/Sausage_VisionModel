@@ -1,6 +1,6 @@
 # Sausage Vision Model
 
-Instance segmentation for sausage bin picking. Compare YOLOv8-seg and YOLO11-seg; use SAM 3 to generate annotation proposals for manual correction. Detectron2 is installed separately for research. No sausage-trained model or production accuracy is claimed yet.
+Instance segmentation for sausage bin picking. Compare YOLOv8-seg and YOLO11-seg; use SAM 3 to generate annotation proposals for manual correction. Detectron2 is installed separately for research. Pilot-trained checkpoints are saved locally; production accuracy remains unverified.
 
 ## Open and start coding
 
@@ -61,16 +61,27 @@ Enter the token privately in the terminal. This command downloads the gated weig
 After reviewing labels, run separate matched experiments:
 
 ```bash
-python -m sausage_vision train --model weights/yolov8n-seg.pt --out runs/yolov8n_pilot --batch 4
-python -m sausage_vision train --model weights/yolo11n-seg.pt --out runs/yolo11n_pilot --batch 4
+python -m sausage_vision train --config configs/train_pilot_small.yaml --model weights/yolov8n-seg.pt --out runs/yolov8n_new
+python -m sausage_vision train --config configs/train_pilot_small.yaml --model weights/yolo11n-seg.pt --out runs/yolo11n_new
 ```
 
-Both pretrained checkpoints passed CUDA inference on this machine; they are generic models, not sausage-trained weights. F5 configurations are also supplied. Capture-session separation and held-out production footage are required before comparing accuracy for the site.
+The small-pilot configuration uses explicit AdamW settings, batch/nominal batch 4, full precision and no early stopping. Capture-session separation and held-out production footage are required before measuring accuracy for the site.
+
+## Run trained predictions
+
+```bash
+python -m sausage_vision predict --weights weights/sausage_baseline_best.pt --source /path/to/images --out runs/new_images
+python scripts/predict_video.py --source /path/to/video.mp4 --out runs/new_video
+```
+
+The image command saves individual masks and JSON metadata. The video command saves `predictions.mp4` and per-frame detections. These are segmentation outputs, not robot grasp commands.
+
+`scripts/inspect_site_videos.py` extracts 12 fixed review frames from the supplied videos with timestamp provenance. `scripts/evaluate_baselines.py` compares the two `_pilot_02` checkpoints, creates a visual review and selects the best pilot mask mAP50-95 checkpoint. Re-running evaluation requires a new output directory or preserving/renaming the old results first. Site footage is unlabelled and only supports qualitative review today.
 
 ## Repository and verification
 
 Remote: `Nghehalot-arch/Sausage_VisionModel`. Setup branch: `codex/vision-setup`, based on the original main commit. Existing MIT LICENSE is preserved; dependency and model licenses remain separate.
 
-Verified: three dataset unit tests, actual COCO conversion, YOLOv8/YOLO11 CUDA inference, SAM 3 image-builder import, Detectron2 CUDA ROIAlign forward/backward, and dependency consistency in both environments. No full model training, robot integration or production benchmark has run.
+Verified: three dataset unit tests, actual COCO conversion, two completed 100-epoch pilot training runs, checkpoint validation, site-frame predictions, SAM 3 image-builder import, Detectron2 CUDA ROIAlign forward/backward, and dependency consistency in both environments. See [baseline results and limitations](docs/BASELINE_RESULTS.md). No robot integration or labelled production benchmark has run.
 
 Official installation references: [Ultralytics](https://docs.ultralytics.com/quickstart/), [SAM 3](https://github.com/facebookresearch/sam3), [Detectron2](https://detectron2.readthedocs.io/en/latest/tutorials/install.html).
