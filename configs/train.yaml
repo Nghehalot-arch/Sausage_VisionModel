@@ -1,0 +1,9 @@
+model: yolo11n-seg.pt
+epochs: 100
+imgsz: 640
+batch: 8
+workers: 4
+patience: 20
+seed: 42
+overlap_mask: false
+mask_ratio: 4

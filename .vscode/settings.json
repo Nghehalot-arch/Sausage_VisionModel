@@ -1,0 +1,8 @@
+{
+  "python.defaultInterpreterPath": "/home/nghehalot/.venvs/sausage-vision/bin/python",
+  "terminal.integrated.env.linux": {"GIT_CONFIG_GLOBAL": "/dev/null", "YOLO_CONFIG_DIR": "/home/nghehalot/.local/share/sausage-vision/ultralytics"},
+  "python.testing.unittestEnabled": true,
+  "python.testing.unittestArgs": ["-s", "tests", "-p", "test_*.py"],
+  "files.exclude": {"**/__pycache__": true},
+  "files.watcherExclude": {"**/data/**": true, "**/runs/**": true}
+}
