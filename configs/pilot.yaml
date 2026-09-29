@@ -1,0 +1,21 @@
+# Layout groups are inferred from the supplied photos, not verified capture sessions.
+# This is a debugging split; collect independently captured test scenes later.
+class_name: sausage
+exclude:
+  IMG_1434.jpeg: Five sausages visible but only four annotated; upper-right instance missing.
+groups:
+  - name: single_sausage
+    split: train
+    files: [IMG_1429.jpeg, IMG_1430.jpeg, IMG_1431.jpeg, IMG_1432.jpeg, IMG_1433.jpeg]
+  - name: loose_arrangements
+    split: val
+    files: [IMG_1435.jpeg, IMG_1436.jpeg, IMG_1437.jpeg, IMG_1438.jpeg]
+  - name: crossed_sausages
+    split: train
+    files: [IMG_1439.jpeg, IMG_1440.jpeg, IMG_1441.jpeg, IMG_1442.jpeg, IMG_1443.jpeg]
+  - name: arranged_rows
+    split: train
+    files: [IMG_1444.jpeg, IMG_1445.jpeg, IMG_1446.jpeg, IMG_1447.jpeg, IMG_1448.jpeg]
+conversion:
+  min_preview_iou: 0.98
+  preview_long_side: 640
